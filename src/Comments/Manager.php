@@ -121,6 +121,7 @@ class Manager implements IManager, EventSubscriberInterface {
 
     } else {
       $vars['pages_with_comments'] = $this->getPagesWithComments();
+      $vars['latest_comments'] = $this->getLatestComments();
     }
 
     return $vars;
@@ -184,6 +185,25 @@ class Manager implements IManager, EventSubscriberInterface {
     }
 
     return $vars;
+  }
+
+  private function getLatestComments()
+  {
+    $pages = $this->getPagesWithComments();
+    $comments = [];
+    foreach ($pages as $page) {
+      $data = Yaml::parse(file_get_contents($page->file['path']));
+      for($i = 0; $i < count($data['comments']); $i += 1) {
+        $data['comments'][$i]['page'] = $page;
+      }
+      $comments = array_merge($comments, $data['comments']);
+
+    }
+    usort($comments, function($a, $b) {
+      return (strtotime($a['date']) < strtotime($b['date']));
+    });
+
+    return array_slice($comments, 0, 10);
   }
 
   private function getPagesWithComments($path = '')

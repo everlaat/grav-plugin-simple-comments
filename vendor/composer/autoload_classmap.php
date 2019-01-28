@@ -6,4 +6,6 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'SimpleComments\\Comments\\Manager' => $baseDir . '/src/Comments/Manager.php',
+    'SimpleComments\\Manager' => $baseDir . '/src/Manager.php',
 );

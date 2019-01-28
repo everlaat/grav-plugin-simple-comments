@@ -27,10 +27,39 @@
       {{ nonce_field('form', 'form-nonce')|raw }}
     </form>
   {% elseif pages_with_comments %}
+    {% if latest_comments %}
+    <h1>Latest Comments</h1>
     <table>
       <thead>
         <tr>
-          <th style="width:70%;">Page</th>
+          <th>Date</td>
+          <th>Comment</th>
+          <th>Page</th>
+          <th></th>
+        </tr>
+      <thead>
+      <tbody>
+      {% for c in latest_comments %}
+        <tr>
+          <td>{{ c.date | nicetime }}</td>
+          <td><em>{{ c.author}} &lt;{{ c.email }}&gt;</em><br />{{ c.text }}</td>
+          <td> {{ c.page.page}} </td>
+          <td>
+            <a href="/{{ c.page.page }}" target="_blank"><i class="fa fa-fw fa-external-link"></i></a>
+            <a href="{{ c.page.editUrl }}"><i class="fa fa-fw fa-comments"></i></a>
+          </td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+
+    {% endif %}
+
+    <h1>All Pages With Comments</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>Page</th>
           <th>Amount of Comments</th>
           <th>Last Modified</th>
           <th></th>

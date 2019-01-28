@@ -20,11 +20,17 @@ class ComposerStaticInit0992e39e6da1b8dd89b943cba7526749
         ),
     );
 
+    public static $classMap = array (
+        'SimpleComments\\Comments\\Manager' => __DIR__ . '/../..' . '/src/Comments/Manager.php',
+        'SimpleComments\\Manager' => __DIR__ . '/../..' . '/src/Manager.php',
+    );
+
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
             $loader->prefixLengthsPsr4 = ComposerStaticInit0992e39e6da1b8dd89b943cba7526749::$prefixLengthsPsr4;
             $loader->prefixDirsPsr4 = ComposerStaticInit0992e39e6da1b8dd89b943cba7526749::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInit0992e39e6da1b8dd89b943cba7526749::$classMap;
 
         }, null, ClassLoader::class);
     }
