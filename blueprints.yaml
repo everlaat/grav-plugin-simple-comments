@@ -1,0 +1,27 @@
+name: Simple Comments
+version: 0.1.0
+description: Simple Comments developed for Vinny
+icon: plug
+author:
+  name: Elvin Verlaat
+  email: everlaat@gmail.com
+homepage: https://github.com/everlaat/grav-plugin-simple-comments
+demo: http://demo.yoursite.com
+keywords: grav, plugin, etc
+bugs: https://github.com/everlaat/grav-plugin-simple-comments/issues
+docs: https://github.com/everlaat/grav-plugin-simple-comments/blob/develop/README.md
+license: MIT
+
+form:
+  validation: strict
+  fields:
+    enabled:
+      type: toggle
+      label: PLUGIN_ADMIN.PLUGIN_STATUS
+      highlight: 1
+      default: 0
+      options:
+        1: PLUGIN_ADMIN.ENABLED
+        0: PLUGIN_ADMIN.DISABLED
+      validate:
+        type: bool

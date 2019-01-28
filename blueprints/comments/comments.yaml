@@ -1,0 +1,19 @@
+title: Comments
+form:
+  fields:
+    comments:
+      type: list
+      label: Comments
+      fields:
+        .author:
+          type: text
+          label: Author
+        .email:
+          type: text
+          label: Email
+        .date:
+          type: datetime
+          label: Date Time
+        .text:
+          type: textarea
+          label: Text

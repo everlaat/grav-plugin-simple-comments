@@ -1,0 +1,53 @@
+{% extends 'partials/base.html.twig' %}
+
+{% block titlebar %}
+  {% if comments_page_path %}
+    <div class="button-bar">
+      <a class="button" href="{{ base_url }}/{{ plugin_admin_path }}"><i class="fa fa-reply"></i> {{ "PLUGIN_ADMIN.BACK"|tu }}</a>
+    <button class="button" type="submit" name="task" value="save" form="blueprints" onclick="document.getElementById('commentForm').submit()"><i class="fa fa-check"></i> {{ "PLUGIN_ADMIN.SAVE"|tu }}</button>
+    </div>
+    <h1><i class="fa fa-fw fa-comments-o"></i> {{ comments_page_path }}</h1>
+  {% else %}
+    <h1><i class="fa fa-fw fa-comments-o"></i> {{ "PLUGIN_ADMIN_ADDON_SIMPLE_COMMENTS.NAME"|tu }}</h1>
+  {% endif %}
+
+{% endblock %}
+
+{% block content %}
+  {% if comments_page_path %}
+    <form method="post" id="commentForm">
+      {% for field in blueprint.fields %}
+        {% if field.type %}
+          {% set value = attribute(_context, field.name) %}
+          <div class="block block-{{field.type}}">
+            {% include ["forms/fields/#{field.type}/#{field.type}.html.twig", 'forms/fields/text/text.html.twig'] %}
+          </div>
+        {% endif %}
+      {% endfor %}
+      {{ nonce_field('form', 'form-nonce')|raw }}
+    </form>
+  {% elseif pages_with_comments %}
+    <table>
+      <thead>
+        <tr>
+          <th style="width:70%;">Page</th>
+          <th>Amount of Comments</th>
+          <th>Last Modified</th>
+          <th></th>
+        </tr>
+      <thead>
+      <tbody>
+      {% for p in pages_with_comments %}
+        <tr>
+          <td><a href="/{{ p.page }}" target="_blank"><i class="fa fa-fw fa-external-link"></i></a> {{ p.page}} </td>
+          <td>{{ p.amountOfComments }}</td>
+          <td>{{ p.modifiedDate | nicetime }}</td>
+          <td>
+            <a href="{{ p.editUrl }}">edit</a>
+          </td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  {% endif %}
+{% endblock %}
