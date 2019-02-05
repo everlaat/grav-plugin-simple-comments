@@ -29,6 +29,8 @@ class Manager implements IManager, EventSubscriberInterface {
   {
     $this->grav = $grav;
     $this->plugin = $plugin;
+    $this->config = $grav['config']->get('plugins.simple-comments');
+
 
     self::$instance = $this;
 
@@ -93,6 +95,7 @@ class Manager implements IManager, EventSubscriberInterface {
     $twig = $this->grav['twig'];
     $uri = $this->grav['uri'];
     $filepath = null;
+    print_r($this->config); exit;
 
     if (isset($uri->paths()[2])) {
       $commentsPagePath = $uri->paths();
@@ -111,6 +114,9 @@ class Manager implements IManager, EventSubscriberInterface {
         $data['comments'] = array_reverse($_POST['comments']);
         file_put_contents($filepath, Yaml::dump($data, 10));
         $this->grav->redirect($this->plugin->getPreviousUrl());
+      } else if (isset($_POST['form-nonce'])) {
+        unlink($filepath);
+        $this->grav->redirect('/admin/'.$this->getLocation());
       }
 
       $vars['comments_page_path'] = $commentsPagePath;
@@ -140,7 +146,9 @@ class Manager implements IManager, EventSubscriberInterface {
       $post = isset($_POST['data']) ? $_POST['data'] : [];
 
       $name = filter_var(urldecode($post['name']), FILTER_SANITIZE_STRING);
-      $email = filter_var(urldecode($post['email']), FILTER_SANITIZE_STRING);
+      if (!isset($this->config['email_field_enabled']) || $this->config['email_field_enabled'] == 1) {
+        $email = filter_var(urldecode($post['email']), FILTER_SANITIZE_STRING);
+      }
       $text = filter_var(urldecode($post['comment']), FILTER_SANITIZE_STRING);
 
       if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
