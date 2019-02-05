@@ -95,7 +95,6 @@ class Manager implements IManager, EventSubscriberInterface {
     $twig = $this->grav['twig'];
     $uri = $this->grav['uri'];
     $filepath = null;
-    print_r($this->config); exit;
 
     if (isset($uri->paths()[2])) {
       $commentsPagePath = $uri->paths();
