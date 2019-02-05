@@ -179,7 +179,7 @@ class Manager implements IManager, EventSubscriberInterface {
 
       $storageDir = pathinfo($filepath);
       if (!is_dir($storageDir['dirname'])) {
-        mkdir($storageDir['dirname'], 0644, true);
+        mkdir($storageDir['dirname'], 0744, true);
       }
       file_put_contents($filepath, Yaml::dump($data, 10));
       $this->grav->redirect($this->grav['page']->url() . '#Comments');
