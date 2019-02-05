@@ -147,6 +147,8 @@ class Manager implements IManager, EventSubscriberInterface {
       $name = filter_var(urldecode($post['name']), FILTER_SANITIZE_STRING);
       if (!isset($this->config['email_field_enabled']) || $this->config['email_field_enabled'] == 1) {
         $email = filter_var(urldecode($post['email']), FILTER_SANITIZE_STRING);
+      } else {
+        $email = '';
       }
       $text = filter_var(urldecode($post['comment']), FILTER_SANITIZE_STRING);
 
